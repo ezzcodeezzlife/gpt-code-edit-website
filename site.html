@@ -2,11 +2,8 @@
   <head>
     <script>
       async function changeSourceCode() {
-        
-        const model = "code-davinci-edit-001";
         let input =  document.documentElement.innerHTML
-        
-        const instruction = document.getElementById("inputField").value + "" ;
+        const instruction = document.getElementById("inputField").value 
 
         const response = await fetch("https://api.openai.com/v1/edits", {
             method: "POST",
@@ -14,13 +11,11 @@
             "Content-Type": "application/json",
             "Authorization": `Bearer sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx`
             },
-            body: JSON.stringify({ model, input, instruction, temperature: 2 })
-        });
+            body: JSON.stringify({ "code-davinci-edit-001", input, instruction, temperature: 2 })
+        })
+        const result = await response.json()
 
-        const result = await response.json();
-        console.log(result);
-
-        let newSourceCode = result.choices[0].text;
+        let newSourceCode = result.choices[0].text
         document.documentElement.innerHTML = newSourceCode 
       }
       
@@ -36,10 +31,8 @@
 
     <h1>hello</h1>
 
-
     <input type="text" id="inputField"><br>
     <button onclick="changeSourceCode()">Submit</button>
 
-    
   </body>
 </html>
